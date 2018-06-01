@@ -8,7 +8,7 @@ from .config import CONFIG
 import json
 
 __version__ = CONFIG.VERSION
-__all__ = ['Document']
+__all__ = ['Document', 'Util']
 
 
 class Document:
@@ -17,11 +17,12 @@ class Document:
         self.textList = []
 
     def add_text(self, text="\n", bold=0, font_size=1, underline=0):
+        text = str(text)
         if text.endswith("\n") is False:
             text += "\n"
         text = text.encode("gbk", 'replace')
         text = base64.b64encode(text).decode()
-        self.textList.append(Document._new_print_item(text, bold, font_size, 1, underline))
+        self.textList.append(Document._new_print_item(text, bold, font_size, 0, 1, underline))
 
     def add_qrcode(self, text="\n"):
         text += '\n'
@@ -92,3 +93,17 @@ class Document:
                                  self._generate_printing_content(smartGUID, userID, toUserID))
         #TODO: Create decryped response and analyze it?
         return response.content.decode()
+
+
+class Util:
+    @staticmethod
+    def get_userid(username, password):
+        return "userID"
+
+    @staticmethod
+    def bind_machine(guid, userID):
+        return "success"
+
+    @staticmethod
+    def bind_machine(guid, username, password):
+        return "success"
