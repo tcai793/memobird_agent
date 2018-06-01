@@ -34,5 +34,12 @@ A: userID必须与设备绑定后才可以打印，绑定需在官方App内操�
 ## Comments
 若有问题或者建议欢迎提Issue以及Pull Request来讨论。
 
+## Roadmap
+### v2.x
+在第二个大版本内要实现
+1. 提供登录API并获取userID
+2. 提供绑定机器的API
+3. 将网络部分分出去
+
 [py2]:https://img.shields.io/badge/Python-2.x-brightgreen.svg "python2"
 [py3]:https://img.shields.io/badge/Python-3.x-brightgreen.svg "python3"
