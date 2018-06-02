@@ -1,14 +1,19 @@
 from setuptools import setup
 import memobird_agent
 
+with open("README.md", "r") as fh:
+    long_description = fh.read()
+
 setup(
     name='memobird_agent',
     version=memobird_agent.__version__,
     description='Print document on memobird from python using official API',
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     url='http://github.com/tcai793/memobird_agent',
     author='Tong Cai',
     author_email='tong.cai.793@outlook.com',
-    license='MIT',
+    license='GPLv3',
     packages=['memobird_agent'],
     install_requires=[
         'pillow',

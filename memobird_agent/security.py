@@ -6,13 +6,12 @@ import base64
 
 
 class Encryption:
-
     __primary_key = '4398f676'
 
     @staticmethod
     def decrypt_message(message, date):
-        byteKey = Encryption.getDESKey(date).encode()
-        w = DES.new(byteKey, DES.MODE_CBC, byteKey)
+        byte_key = Encryption.get_key(date).encode()
+        w = DES.new(byte_key, DES.MODE_CBC, byte_key)
 
         message = base64.b64decode(message.replace("-", "+").encode())
         message = w.decrypt(message)
@@ -21,8 +20,8 @@ class Encryption:
 
     @staticmethod
     def encrypt_message(message, date):
-        byteKey = Encryption.getDESKey(date).encode()
-        w = DES.new(byteKey, DES.MODE_CBC, byteKey)
+        byte_key = Encryption.get_key(date).encode()
+        w = DES.new(byte_key, DES.MODE_CBC, byte_key)
 
         message = Padding.pad(message.encode(), 8, 'pkcs7')
         message = w.encrypt(message)
@@ -30,7 +29,7 @@ class Encryption:
         return message
 
     @staticmethod
-    def getDESKey(date):
+    def get_key(date):
         try:
             time = datetime.strptime(date, '%Y-%m-%d %H:%M:%S')
         except ValueError:
@@ -41,4 +40,3 @@ class Encryption:
         m.update(key.encode())
         key = m.hexdigest()[0:8]
         return key
-
