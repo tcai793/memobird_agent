@@ -19,7 +19,7 @@ document = memobird_agent.Document()
 document.add_text(text="测试文字", bold=0, font_size=1, underline=0)
 document.add_picture(path_to_image)
 document.add_qrcode("嵌在二维码的文本")
-document.add_text(icon_id)
+document.add_text(sticker_id)
 
 user_id = memobird_agent.Util.get_user_id(username="username", password="password")
 memobird_agent.Util.bind_machine(smart_guid=smart_guid, user_id=user_id)
