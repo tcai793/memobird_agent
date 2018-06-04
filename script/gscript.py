@@ -9,4 +9,3 @@ import requests
 
 doc = memobird_agent.Document()
 doc.add_qrcode("测试")
-doc.print("9da0ce0543c0f312", 22765)
