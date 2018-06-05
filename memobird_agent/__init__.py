@@ -40,6 +40,7 @@ class Document:
         sticker_id = int(sticker_id)
         self.textList.append(Document._new_print_item(icon_id=sticker_id, print_type=4))
 
+
     def add_picture(self, path):
         image = Image.open(path)
         image = image.transpose(Image.FLIP_TOP_BOTTOM)
