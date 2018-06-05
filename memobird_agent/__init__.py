@@ -32,13 +32,14 @@ class Document:
         text = str(text)
         if text.endswith("\n") is False:
             text += '\n'
-        text = text.encode('gbk', 'replace')
+        text = text.encode()
         text = base64.b64encode(text).decode()
         self.textList.append(Document._new_print_item(text, print_type=3))
 
-    def add_sticker(self, icon_id=0):
-        icon_id = int(icon_id)
-        self.textList.append(Document._new_print_item(icon_id=icon_id, print_type=4))
+    def add_sticker(self, sticker_id=0):
+        sticker_id = int(sticker_id)
+        self.textList.append(Document._new_print_item(icon_id=sticker_id, print_type=4))
+
 
     def add_picture(self, path):
         image = Image.open(path)
