@@ -36,7 +36,7 @@ def main():
         config_f = open(APP_CONFIG_PATH)
         config = json.load(config_f)
         config_f.close()
-        machine_list = json.loads(config["machines"])
+        machine_list = config["machines"]
     except:
         print("Error occurred when parsing config file, exiting")
         exit(-1)

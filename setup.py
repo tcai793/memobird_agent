@@ -15,7 +15,7 @@ setup(
     author='Tong Cai',
     author_email='tong.cai.793@outlook.com',
     license='GPLv3',
-    packages=['memobird_agent'],
+    packages=['memobird_agent', 'memobird_agent.script'],
     install_requires=[
         'pillow',
         'requests',
@@ -24,7 +24,8 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'memo_service_monitor = memobird_agent.script.service_monitor:main'
+            'memo_service_monitor = memobird_agent.script.service_monitor:main',
+            'memo_machine_monitor = memobird_agent.script.machine_monitor:main'
         ]
     },
     # Classifiers help users find your project by categorizing it.

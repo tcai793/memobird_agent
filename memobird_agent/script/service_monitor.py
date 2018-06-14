@@ -32,7 +32,7 @@ def main():
         config_f = open(APP_CONFIG_PATH)
         config = json.load(config_f)
         config_f.close()
-        process_list = json.loads(config["processes"])
+        process_list = config["processes"]
     except:
         print("Error occurred when parsing config file, exiting")
         exit(-1)
