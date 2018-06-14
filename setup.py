@@ -15,13 +15,20 @@ setup(
     author='Tong Cai',
     author_email='tong.cai.793@outlook.com',
     license='GPLv3',
-    packages=['memobird_agent'],
+    packages=['memobird_agent', 'memobird_agent.script'],
     install_requires=[
         'pillow',
         'requests',
         'pycryptodome',
         'pillow'
     ],
+    entry_points={
+        'console_scripts': [
+            'memo_service_monitor = memobird_agent.script.service_monitor:main',
+            'memo_machine_monitor = memobird_agent.script.machine_monitor:main',
+            'memo_transmission_monitor = memobird_agent.script.transmission_monitor:main'
+        ]
+    },
     # Classifiers help users find your project by categorizing it.
     #
     # For a list of valid classifiers, see https://pypi.org/classifiers/
