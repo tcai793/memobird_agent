@@ -1,6 +1,5 @@
 import subprocess
 import json
-import memobird_agent
 from .document import ReportDocument
 
 APP_CONFIG_PATH = "/etc/memobird_agent/machine_monitor.json"

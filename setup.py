@@ -25,7 +25,8 @@ setup(
     entry_points={
         'console_scripts': [
             'memo_service_monitor = memobird_agent.script.service_monitor:main',
-            'memo_machine_monitor = memobird_agent.script.machine_monitor:main'
+            'memo_machine_monitor = memobird_agent.script.machine_monitor:main',
+            'memo_transmission_monitor = memobird_agent.script.transmission_monitor:main'
         ]
     },
     # Classifiers help users find your project by categorizing it.
