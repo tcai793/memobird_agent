@@ -22,6 +22,11 @@ setup(
         'pycryptodome',
         'pillow'
     ],
+    entry_points={
+        'console_scripts': [
+            'memo_service_monitor = memobird_agent.script.service_monitor:main'
+        ]
+    },
     # Classifiers help users find your project by categorizing it.
     #
     # For a list of valid classifiers, see https://pypi.org/classifiers/
