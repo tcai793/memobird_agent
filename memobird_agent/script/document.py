@@ -1,5 +1,5 @@
 import memobird_agent
-import time
+import datetime
 import json
 
 GENERAL_CONFIG_PATH = "/etc/memobird_agent/general.json"
@@ -23,7 +23,7 @@ class ReportDocument:
         # Document
         self._doc = memobird_agent.Document()
         self._doc.add_text("From: " + self._config["machine_name"])
-        self._doc.add_text("Time: " + time.strftime("%b %d %H:%M:%S"))
+        self._doc.add_text("Time: " + datetime.datetime.utcnow().strftime("%b %d %H:%M:%S"))
         self._doc.add_sticker(43)
 
     def add_text(self, text):
