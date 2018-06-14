@@ -1,28 +1,9 @@
 import subprocess
 import json
-import memobird_agent
+from .document import ReportDocument
 
 APP_CONFIG_PATH = "/etc/memobird_agent/service_monitor.json"
 STATE_FILE_PATH = "/etc/memobird_agent/data/service_monitor.json"
-GENERAL_CONFIG_PATH = "/etc/memobird_agent/general.json"
-
-
-def memo_print(process, state):
-    config = {}
-    try:
-        config_f = open(GENERAL_CONFIG_PATH)
-        config = json.load(config_f)
-        config_f.close()
-    except:
-        print("Error occurred when parsing general config file, exiting")
-        exit(-1)
-    if "smart_guid" not in config or "user_id" not in config or "machine_name" not in config:
-        print("Machine config file missing item, exiting")
-        exit(-1)
-    doc = memobird_agent.Document()
-    text = config["machine_name"] + ":" + process + "is" + state
-    doc.add_text(text)
-    doc.print(config["smart_guid"], config["user_id"])
 
 
 def main():
@@ -46,10 +27,11 @@ def main():
     except:
         print("Cannot read state file")
 
+    doc = ReportDocument()
     # Scan through configured processes
-    running_processes = subprocess.run(["ps", "aux"], stdout=subprocess.PIPE).stdout.decode()
+    running_processes = subprocess.run(["ps", "-e", "-o", "command"], stdout=subprocess.PIPE).stdout.decode()
     for process in process_list:
-        if running_processes.find(process):
+        if process in running_processes:
             new_status = "UP"
         else:
             new_status = "DOWN"
@@ -59,11 +41,13 @@ def main():
             if state[process] == new_status:
                 continue
             else:
-                memo_print(process, new_status)
+                state[process] = new_status
+                doc.add_text(process + ' is ' + new_status)
         # if DNE in data, then add current state and print
         else:
             state[process] = new_status
-            memo_print(process, new_status)
+            doc.add_text(process + ' is ' + new_status)
+    doc.print()
 
     # Write data back to data location
     try:

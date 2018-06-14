@@ -1,5 +1,5 @@
 class CONFIG:
-    VERSION = "2.0.4"
+    VERSION = "2.1.2"
     PRINT_URL = 'http://im.memobird.cn/ashx/DesClientInterface.ashx/'
     APP_URL = 'http://im.memobird.cn/wse/wsesmart.asmx'
     SETTING_URL = 'http://im.memobird.cn/ashx/DesClientInterface.ashx/'
