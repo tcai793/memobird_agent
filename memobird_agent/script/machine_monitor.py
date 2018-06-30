@@ -18,11 +18,15 @@ def _state_machine(old_state, reachability):
         'unreachable': {True: 'reachable', False: 'printed'},
         'printed': {True: 'reachable', False: 'printed'}
     }
+    output_table = {
+        'reachable': {True: '', False: ''},
+        'unreachable': {True: '', False: 'unreachable'},
+        'printed': {True: 'reachable', False: ''}
+    }
     if old_state not in valid_state:
         raise UnknownStateError
     new_state = transition_table[old_state][reachability]
-    print_message = new_state if old_state == 'unreachable' and not reachability or \
-                                 old_state == 'printed' and reachability else None
+    print_message = output_table[old_state][reachability]
     return new_state, print_message
 
 
@@ -56,6 +60,8 @@ def main():
 
     # Scan through configured processes
     for machine in machine_list:
+        if machine not in state:
+            state[machine] = 'reachable'
         reachability = True if ping(machine) is 0 else False
         state[machine], print_message = _state_machine(state[machine], reachability)
         if print_message:
