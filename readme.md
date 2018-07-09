@@ -1,10 +1,10 @@
 # Memobird Agent
 
-![py2][py2] ![py3][py3]
+![py2][py2] ![py3][py3] [中文][chinese_version]
 
-Memobird Agent 是一个开源的咕咕机打印API，它基于对官方App的逆向分析。
+Memobird Agent is an open-source API designed to print documents on [Memobird][memobird]. This API is accomplished by reverse engineering of its official APP.
 
-使用寥寥数行代码就可以实现自定义文本，图片，二维码和内置贴画的打印。
+Texts, pictures, QR Codes and internal stickers can be printed using only a few lines of code.
 
 ## Installation
 ```bash
@@ -16,9 +16,9 @@ pip install memobird_agent
 import memobird_agent
 
 document = memobird_agent.Document()
-document.add_text(text="测试文字", bold=0, font_size=1, underline=0)
+document.add_text(text="Test Text", bold=0, font_size=1, underline=0)
 document.add_picture(path_to_image)
-document.add_qrcode("嵌在二维码的文本")
+document.add_qrcode("Text to be encoded into the QR Code")
 document.add_text(sticker_id)
 
 
@@ -29,33 +29,44 @@ document.print(smart_guid, user_id, to_user_id)
 
 ## Examples
 ### Simple Examples
-#### 打印文本
+#### Print text
 ```python
 import memobird_agent
 
 document = memobird_agent.Document()
-document.add_text("需要打印的文字")
+document.add_text("Text to print")
 document.print(smart_guid, user_id, to_user_id)
 ```
 
 ## FAQ
-Q: `Document.print()`里的三个参数都是什么？应该如何获取？
+####Q: What are the three parameters for `Document.print()`? How can I obtain them?
 
-A: smart_guid是长按设备六秒后印出文档里的16个字符的字符串。user_id是发送者的用户ID。to_user_id是一个可选项，表示了接收者的用户ID。可以通过`memobird_agent.Util.get_user_id(username, password)`来取得用户ID
+A: Those are information about the sender and the receiver. Detailed descriptions are listed below:
+ 
+`smart_guid` is the 16-hex-digit hardware ID of the printer which can be found by long-pressing the button on the machine for six seconds. 
 
-Q: 为什么输入了正确的smart_guid和user_id后无法打印？
+`user_id` is the user ID of the sender, which can be obtained by using `memobird_agent.Util.get_user_id(username, password)`.
 
-A: smart_guid所属的咕咕机必须与user_id所属的用户绑定后才可以打印，绑定可在官方App内操作，或使用`memobird_agent.Util.bind_machine(smart_guid, user_id)`来绑定。
+`to_user_id` is an **optional** parameter which represents the receiver's machine ID. (Defaults to be same as the `user_id`)
+
+
+####Q: I called `document.print()` with correct parameters. Why the machine does not print my document?
+
+A: To print a document on a specific machine, that machine must be binded to the user. Two methods are available: Use the official APP, or use the builtin function `memobird_agent.Util.bind_machine(smart_guid, user_id)`.
+
 
 ## Comments
-若有问题或者建议欢迎提Issue以及Pull Request来讨论。
+Issues and Pull Requests are welcomed.
 
 ## Roadmap
 ### v2.5
-1. 提供设置蜂鸣器与LED的API
+1. Provide API to change status of the LED and buzzer.
+
 
 ### v3.x
-1. 提供更多的功能
+1. Provide more functionalities.
 
 [py2]:https://img.shields.io/badge/Python-2.x-brightgreen.svg "python2"
 [py3]:https://img.shields.io/badge/Python-3.x-brightgreen.svg "python3"
+[chinese_version]:https://github.com/tcai793/memobird_agent/blob/master/readme_cn.md "English Version"
+[memobird]:https://www.memobird.shop/ "Memobird Description"
