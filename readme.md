@@ -39,7 +39,7 @@ document.print(smart_guid, user_id, to_user_id)
 ```
 
 ## FAQ
-####Q: What are the three parameters for `Document.print()`? How can I obtain them?
+#### Q: What are the three parameters for `Document.print()`? How can I obtain them?
 
 A: Those are information about the sender and the receiver. Detailed descriptions are listed below:
  
@@ -50,7 +50,7 @@ A: Those are information about the sender and the receiver. Detailed description
 `to_user_id` is an **optional** parameter which represents the receiver's machine ID. (Defaults to be same as the `user_id`)
 
 
-####Q: I called `document.print()` with correct parameters. Why the machine does not print my document?
+#### Q: I called `document.print()` with correct parameters. Why the machine does not print my document?
 
 A: To print a document on a specific machine, that machine must be binded to the user. Two methods are available: Use the official APP, or use the builtin function `memobird_agent.Util.bind_machine(smart_guid, user_id)`.
 
