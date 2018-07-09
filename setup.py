@@ -20,7 +20,6 @@ setup(
         'pillow',
         'requests',
         'pycryptodome',
-        'pillow'
     ],
     entry_points={
         'console_scripts': [

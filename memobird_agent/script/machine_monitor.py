@@ -6,6 +6,30 @@ APP_CONFIG_PATH = "/etc/memobird_agent/machine_monitor.json"
 STATE_FILE_PATH = "/etc/memobird_agent/data/machine_monitor.json"
 
 
+class UnknownStateError(Exception):
+    def __init__(self, state):
+        self.state = state
+
+
+def _state_machine(old_state, reachability):
+    valid_state = ['reachable', 'unreachable', 'printed']
+    transition_table = {
+        'reachable': {True: 'reachable', False: 'unreachable'},
+        'unreachable': {True: 'reachable', False: 'printed'},
+        'printed': {True: 'reachable', False: 'printed'}
+    }
+    output_table = {
+        'reachable': {True: '', False: ''},
+        'unreachable': {True: '', False: 'unreachable'},
+        'printed': {True: 'reachable', False: ''}
+    }
+    if old_state not in valid_state:
+        raise UnknownStateError
+    new_state = transition_table[old_state][reachability]
+    print_message = output_table[old_state][reachability]
+    return new_state, print_message
+
+
 def ping(address):
     response = subprocess.run(["ping", "-c", "1", "-W", "2", address], stdout=subprocess.PIPE)
     return response.returncode
@@ -36,19 +60,12 @@ def main():
 
     # Scan through configured processes
     for machine in machine_list:
-        if ping(machine) is 0:
-            curr_status = "reachable"
-        else:
-            curr_status = "unreachable"
-        if machine in state:
-            if state[machine] == curr_status:
-                continue
-            else:
-                state[machine] = curr_status
-                doc.add_text(machine + ' is ' + curr_status)
-        else:
-            state[machine] = curr_status
-            doc.add_text(machine + ' is ' + curr_status)
+        if machine not in state:
+            state[machine] = 'reachable'
+        reachability = True if ping(machine) is 0 else False
+        state[machine], print_message = _state_machine(state[machine], reachability)
+        if print_message:
+            doc.add_text(machine + ' is ' + print_message)
     doc.print()
 
     # Write data back to data location
